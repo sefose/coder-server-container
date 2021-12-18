@@ -44,7 +44,7 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: sefose/code-server:latest
-          build-args:
+          build-args: |
             UBUNTU_VERSION=${{ steps.ubuntu_version.outputs.content }}
             VSC_VERSION=${{ steps.vscode_version.outputs.content }}
       -
