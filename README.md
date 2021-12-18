@@ -1,2 +1,2 @@
 # coder-server-container
-container with code server installed
+ubuntu-based container with code server installed

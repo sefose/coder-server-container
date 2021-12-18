@@ -1,0 +1,29 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build_push:
+    runs-on: ubuntu-latest
+
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: read ubuntu version
+        id: ubuntu_version
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./ubuntu_version
+      - name: read vscode version
+        id: vscode_version
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./vscode_version
+      - name: Build the Docker image without tag
+        run: docker build . --file Dockerfile --tag sefose/code-server
+      - name: Push the Docker image without tag
+        run: docker push sefose/code-server
