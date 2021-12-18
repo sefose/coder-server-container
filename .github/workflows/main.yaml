@@ -24,6 +24,11 @@ jobs:
         with:
           path: ./vscode_version
       - name: Build the Docker image without tag
-        run: docker build . --file Dockerfile --tag sefose/code-server
+        run: |
+          docker build . \
+            --file Dockerfile \
+            --tag sefose/code-server \
+            --build-arg UBUNTU_VERSION=${{ steps.ubuntu_version.outputs.content }} \
+            --build-arg VSC_VERSION=${{ steps.vscode_version.outputs.content }}
       - name: Push the Docker image without tag
         run: docker push sefose/code-server
