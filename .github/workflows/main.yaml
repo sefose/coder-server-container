@@ -37,7 +37,7 @@ jobs:
         with:
           path: ./vscode_version
       -
-        name: Build and push
+        name: Build and push latest
         id: docker_build_latest
         uses: docker/build-push-action@v2
         with:
@@ -50,12 +50,17 @@ jobs:
       -
         name: Image digest
         run: echo ${{ steps.docker_build_latest.outputs.digest }}
-      # - name: Build the Docker image without tag
-      #   run: |
-      #     docker build . \
-      #       --file Dockerfile \
-      #       --tag sefose/code-server \
-      #       --build-arg UBUNTU_VERSION=${{ steps.ubuntu_version.outputs.content }} \
-      #       --build-arg VSC_VERSION=${{ steps.vscode_version.outputs.content }}
-      # - name: Push the Docker image without tag
-      #   run: docker push sefose/code-server
+      -
+        name: Build and push version
+        id: docker_build_version
+        uses: docker/build-push-action@v2
+        with:
+          platforms: linux/amd64
+          push: true
+          tags: sefose/code-server:${{ steps.ubuntu_version.outputs.content }}_${{ steps.vscode_version.outputs.content }}
+          build-args: |
+            UBUNTU_VERSION=${{ steps.ubuntu_version.outputs.content }}
+            VSC_VERSION=${{ steps.vscode_version.outputs.content }}
+      -
+        name: Image digest
+        run: echo ${{ steps.docker_build_version.outputs.digest }}
