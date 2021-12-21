@@ -12,3 +12,5 @@ ARG VSC_VERSION
 RUN curl -fOL https://github.com/cdr/code-server/releases/download/v${VSC_VERSION}/code-server_${VSC_VERSION}_amd64.deb && \
     dpkg -i code-server_${VSC_VERSION}_amd64.deb && \
     rm code-server_${VSC_VERSION}_amd64.deb
+
+ENTRYPOINT ["code-server"]
